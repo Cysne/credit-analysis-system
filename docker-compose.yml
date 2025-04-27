@@ -1,0 +1,99 @@
+version: "3.9"
+
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - clientes
+      - score
+      - analise
+      - recomendacao
+    restart: on-failure
+    
+  analise:
+    build:
+      context: .
+      dockerfile: ./services/analise/Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongodb
+      - postgres
+    environment:
+      MONGO_URI: mongodb://mongodb:27017
+      POSTGRES_URI: postgres://user:password@postgres:5432/credit_analysis?sslmode=disable
+      REDIS_HOST: redis:6379
+
+  clientes:
+    build:
+      context: .
+      dockerfile: ./services/clientes/Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mongodb
+      - postgres
+    environment:
+      MONGO_URI: mongodb://mongodb:27017
+      POSTGRES_URI: postgres://user:password@postgres:5432/credit_analysis?sslmode=disable
+      REDIS_HOST: redis:6379
+
+  recomendacao:
+    build:
+      context: .
+      dockerfile: ./services/recomendacao/Dockerfile
+    ports:
+      - "8083:8083"
+    depends_on:
+      - postgres
+    environment:
+      MONGO_URI: mongodb://mongodb:27017
+      POSTGRES_URI: postgres://user:password@postgres:5432/credit_analysis?sslmode=disable
+      REDIS_HOST: redis:6379
+
+  score:
+    build:
+      context: .
+      dockerfile: ./services/score/Dockerfile
+    ports:
+      - "8084:8084"
+    depends_on:
+      - redis  
+    environment:
+      MONGO_URI: mongodb://mongodb:27017
+      POSTGRES_URI: postgres://user:password@postgres:5432/credit_analysis?sslmode=disable
+      REDIS_HOST: redis:6379
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: credit_analysis
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  mongodb_data:
+  postgres_data:
