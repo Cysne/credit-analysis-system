@@ -1,0 +1,27 @@
+/**
+ * Este projeto é uma implementação de um sistema de análise de crédito distribuído.
+ * 
+ * Funcionalidades principais:
+ * - Serviço de análise de crédito para avaliar perfis financeiros.
+ * - Serviço de recomendação para sugerir produtos financeiros.
+ * - Serviço de clientes para gerenciar informações de clientes.
+ * - Serviço de score para calcular pontuações de crédito.
+ * - API Gateway para unificar o acesso aos serviços.
+ * 
+ * Como usar:
+ * 1. Certifique-se de ter o Docker e o Docker Compose instalados.
+ * 2. Clone este repositório em sua máquina local.
+ * 3. Execute o comando `docker-compose up --build` na raiz do projeto.
+ * 4. Acesse o API Gateway em `http://localhost:8080`.
+ * 
+ * Requisitos:
+ * - Docker 20.10+ e Docker Compose 1.29+.
+ * - Conexão com a internet para baixar as imagens do Docker.
+ * 
+ * Notas:
+ * - Certifique-se de que as portas 8080, 8081, 8082, 8083, 8084, 27017 e 6379 estejam livres.
+ * - O sistema utiliza MongoDB, Redis e PostgreSQL como bancos de dados.
+ * 
+ * Autor: Equipe de Desenvolvimento
+ * Data: [Atualize com a data atual]
+ */
