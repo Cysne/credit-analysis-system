@@ -22,6 +22,3 @@
  * - Certifique-se de que as portas 8080, 8081, 8082, 8083, 8084, 27017 e 6379 estejam livres.
  * - O sistema utiliza MongoDB, Redis e PostgreSQL como bancos de dados.
  * 
- * Autor: Equipe de Desenvolvimento
- * Data: [Atualize com a data atual]
- */
